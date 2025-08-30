@@ -5,13 +5,405 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversor YouTube - ConvertePraMim</title>
     <style>
-        /* ... (todo o CSS do arquivo original) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .converter-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .youtube-logo {
+            width: 50px;
+            height: 50px;
+            background: #ff0000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .format-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .format-option {
+            flex: 1;
+            padding: 15px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .format-option:hover {
+            border-color: #667eea;
+        }
+        
+        .format-option.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .format-option strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .format-option small {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .quality-options {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .quality-options.active {
+            display: block;
+        }
+        
+        .quality-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quality-option:hover {
+            border-color: #667eea;
+        }
+        
+        .quality-option.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .quality-option input[type="radio"] {
+            margin-right: 12px;
+        }
+        
+        .quality-info {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .quality-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .quality-desc {
+            font-size: 13px;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .convert-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 25px;
+        }
+        
+        .convert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .convert-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result {
+            margin-top: 25px;
+            display: none;
+            text-align: center;
+        }
+        
+        .result-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .download-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .download-link:hover {
+            background: #45a049;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <!-- ... (todo o HTML do arquivo original) ... -->
+    <div class="converter-container">
+        <div class="logo-section">
+            <div class="youtube-logo">YT</div>
+            <h1>Conversor de Mídia</h1>
+        </div>
+        
+        <p class="description">
+            Baixe vídeos do YouTube em MP3 ou MP4. 
+            Cole o link abaixo e escolha o formato desejado.
+        </p>
+        
+        <div class="input-group">
+            <label for="videoUrl">URL do Vídeo</label>
+            <input type="text" id="videoUrl" placeholder="Cole o link do YouTube aqui">
+        </div>
+        
+        <div class="input-group">
+            <label>Formato de Saída</label>
+            <div class="format-options">
+                <div class="format-option active" data-format="mp4">
+                    <strong>MP4</strong>
+                    <small>Vídeo + Áudio</small>
+                </div>
+                <div class="format-option" data-format="mp3">
+                    <strong>MP3</strong>
+                    <small>Apenas Áudio</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>Qualidade</label>
+            <div class="quality-options active" id="mp4Qualities">
+                <div class="quality-option active" data-quality="720p">
+                    <input type="radio" name="quality" value="720p" checked>
+                    <div class="quality-info">
+                        <div class="quality-name">HD 720p</div>
+                        <div class="quality-desc">1280x720 - Recomendado</div>
+                    </div>
+                </div>
+                <div class="quality-option" data-quality="1080p">
+                    <input type="radio" name="quality" value="1080p">
+                    <div class="quality-info">
+                        <div class="quality-name">Full HD 1080p</div>
+                        <div class="quality-desc">1920x1080 - Alta qualidade</div>
+                    </div>
+                </div>
+                <div class="quality-option" data-quality="360p">
+                    <input type="radio" name="quality" value="360p">
+                    <div class="quality-info">
+                        <div class="quality-name">SD 360p</div>
+                        <div class="quality-desc">640x360 - Menor tamanho</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quality-options" id="mp3Qualities">
+                <div class="quality-option active" data-quality="192">
+                    <input type="radio" name="quality" value="192" checked>
+                    <div class="quality-info">
+                        <div class="quality-name">192 kbps</div>
+                        <div class="quality-desc">Qualidade padrão</div>
+                    </div>
+                </div>
+                <div class="quality-option" data-quality="320">
+                    <input type="radio" name="quality" value="320">
+                    <div class="quality-info">
+                        <div class="quality-name">320 kbps</div>
+                        <div class="quality-desc">Alta qualidade</div>
+                    </div>
+                </div>
+                <div class="quality-option" data-quality="128">
+                    <input type="radio" name="quality" value="128">
+                    <div class="quality-info">
+                        <div class="quality-name">128 kbps</div>
+                        <div class="quality-desc">Menor tamanho</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="convert-btn" id="convertBtn">Converter para MP4</button>
+        
+        <div class="result" id="result">
+            <p class="result-message" id="resultMessage">Conversão concluída!</p>
+            <a href="#" class="download-link" id="downloadLink" download>Baixar Arquivo</a>
+        </div>
+        
+        <div class="footer">
+            Ao usar este serviço, você concorda com nossos <a href="/termos">Termos de Uso</a>. 
+            Respeite os direitos autorais.
+        </div>
+    </div>
+
     <script>
-        // ... (todo o JS do arquivo original) ...
+        // Seleção de formato
+        document.querySelectorAll('.format-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.format-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                const format = this.dataset.format;
+                document.getElementById('convertBtn').textContent = `Converter para ${format.toUpperCase()}`;
+                
+                // Mostrar opções de qualidade correspondentes
+                document.querySelectorAll('.quality-options').forEach(opt => opt.classList.remove('active'));
+                document.getElementById(`${format}Qualities`).classList.add('active');
+            });
+        });
+
+        // Seleção de qualidade
+        document.querySelectorAll('.quality-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const container = this.closest('.quality-options');
+                container.querySelectorAll('.quality-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                this.querySelector('input').checked = true;
+            });
+        });
+
+        // Envio para conversão
+        document.getElementById('convertBtn').addEventListener('click', async function() {
+            const url = document.getElementById('videoUrl').value;
+            const format = document.querySelector('.format-option.active').dataset.format;
+            const quality = document.querySelector('.quality-option.active input').value;
+            
+            if (!url) {
+                alert('Por favor, insira uma URL do YouTube');
+                return;
+            }
+
+            this.disabled = true;
+            this.textContent = 'Convertendo...';
+
+            try {
+                const response = await fetch('https://smxfflxrmiycorswauaf.supabase.co/functions/v1/media-converter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url, format, quality })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('downloadLink').href = data.downloadUrl;
+                    document.getElementById('result').style.display = 'block';
+                    
+                    if (data.cached) {
+                        document.getElementById('resultMessage').textContent = 'Arquivo encontrado em cache!';
+                    } else {
+                        document.getElementById('resultMessage').textContent = 'Conversão concluída!';
+                    }
+                } else {
+                    alert('Erro: ' + data.error);
+                }
+            } catch (error) {
+                alert('Erro na conversão: ' + error.message);
+            } finally {
+                this.disabled = false;
+                this.textContent = `Converter para ${format.toUpperCase()}`;
+            }
+        });
     </script>
 </body>
 </html>
